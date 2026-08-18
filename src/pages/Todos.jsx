@@ -1,0 +1,178 @@
+import { useEffect, useState } from "react";
+import { api } from "../api.js";
+import { useAuth } from "../AuthContext.jsx";
+
+export default function Todos() {
+  const { user, logout } = useAuth();
+  const [todos, setTodos] = useState([]);
+  const [text, setText] = useState("");
+  const [editingId, setEditingId] = useState(null);
+  const [editText, setEditText] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const today = new Date().toLocaleDateString(undefined, {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+
+  useEffect(() => {
+    api
+      .getTodos()
+      .then(setTodos)
+      .catch((err) => {
+        if (err.status === 401) logout();
+        else setError(err.message);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const addTodo = async (e) => {
+    e.preventDefault();
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    setError("");
+    try {
+      const todo = await api.addTodo(trimmed);
+      setTodos((prev) => [todo, ...prev]);
+      setText("");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const toggleTodo = async (todo) => {
+    // optimistic update
+    setTodos((prev) =>
+      prev.map((t) => (t._id === todo._id ? { ...t, completed: !t.completed } : t))
+    );
+    try {
+      await api.updateTodo(todo._id, { completed: !todo.completed });
+    } catch (err) {
+      setTodos((prev) =>
+        prev.map((t) => (t._id === todo._id ? { ...t, completed: todo.completed } : t))
+      );
+      setError(err.message);
+    }
+  };
+
+  const startEdit = (todo) => {
+    setEditingId(todo._id);
+    setEditText(todo.text);
+  };
+
+  const saveEdit = async (id) => {
+    const trimmed = editText.trim();
+    if (!trimmed) return setEditingId(null);
+    try {
+      const updated = await api.updateTodo(id, { text: trimmed });
+      setTodos((prev) => prev.map((t) => (t._id === id ? updated : t)));
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setEditingId(null);
+    }
+  };
+
+  const removeTodo = async (id) => {
+    const prev = todos;
+    setTodos((p) => p.filter((t) => t._id !== id));
+    try {
+      await api.deleteTodo(id);
+    } catch (err) {
+      setTodos(prev);
+      setError(err.message);
+    }
+  };
+
+  const remaining = todos.filter((t) => !t.completed).length;
+
+  return (
+    <div className="app-shell">
+      <header className="app-header">
+        <div>
+          <span className="brand-mark">Daybook</span>
+          <h1>{today}</h1>
+          <p className="header-sub">
+            Hi {user?.name?.split(" ")[0]} —{" "}
+            {todos.length === 0
+              ? "your list is empty. Add your first task below."
+              : remaining === 0
+              ? "everything's done. Nice."
+              : `${remaining} task${remaining === 1 ? "" : "s"} to go.`}
+          </p>
+        </div>
+        <button className="btn-ghost" onClick={logout}>
+          Log out
+        </button>
+      </header>
+
+      <form className="add-row" onSubmit={addTodo}>
+        <input
+          type="text"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Add a task…"
+          maxLength={300}
+          aria-label="New task"
+        />
+        <button type="submit" className="btn-primary">
+          Add
+        </button>
+      </form>
+
+      {error && <p className="form-error" role="alert">{error}</p>}
+
+      {loading ? (
+        <p className="muted">Loading your list…</p>
+      ) : (
+        <ul className="todo-list">
+          {todos.map((todo) => (
+            <li key={todo._id} className={todo.completed ? "done" : ""}>
+              <label className="check-wrap">
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => toggleTodo(todo)}
+                />
+                <span className="checkmark" aria-hidden="true" />
+              </label>
+
+              {editingId === todo._id ? (
+                <input
+                  className="edit-input"
+                  value={editText}
+                  autoFocus
+                  onChange={(e) => setEditText(e.target.value)}
+                  onBlur={() => saveEdit(todo._id)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") saveEdit(todo._id);
+                    if (e.key === "Escape") setEditingId(null);
+                  }}
+                />
+              ) : (
+                <span className="todo-text" onDoubleClick={() => startEdit(todo)}>
+                  {todo.text}
+                </span>
+              )}
+
+              <div className="row-actions">
+                <button className="btn-icon" onClick={() => startEdit(todo)} aria-label="Edit task">
+                  ✎
+                </button>
+                <button
+                  className="btn-icon danger"
+                  onClick={() => removeTodo(todo._id)}
+                  aria-label="Delete task"
+                >
+                  ✕
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
