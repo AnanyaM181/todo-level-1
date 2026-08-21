@@ -4,7 +4,6 @@ import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import Todos from "./pages/Todos.jsx";
 
-
 function Protected({ children }) {
   const { user } = useAuth();
   return user ? children : <Navigate to="/login" replace />;
