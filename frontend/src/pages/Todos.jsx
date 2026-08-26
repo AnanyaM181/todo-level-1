@@ -7,9 +7,11 @@ export default function Todos() {
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState("");
   const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("medium");
   const [editingId, setEditingId] = useState(null);
   const [editText, setEditText] = useState("");
   const [editDescription, setEditDescription] = useState("");
+  const [editPriority, setEditPriority] = useState("medium");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
