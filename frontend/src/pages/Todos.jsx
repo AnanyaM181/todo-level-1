@@ -100,8 +100,8 @@ export default function Todos() {
         <div>
           <span className="brand-mark">Daybook</span>
           <h1>{today}</h1>
-          <p className="header-sub">
-            Hi {user?.name?.split(" ")[0]} —{" "}
+                    <p className="header-sub">
+            Hey {user?.name?.split(" ")[0]}! —{" "}
             {todos.length === 0
               ? "your list is empty. Add your first task below."
               : remaining === 0
