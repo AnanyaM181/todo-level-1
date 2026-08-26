@@ -11,7 +11,7 @@ function Protected({ children }) {
 
 function PublicOnly({ children }) {
   const { user } = useAuth();
-  return user ? <Navigate to="/" replace /> : children;
+  return user ? <Navigate to="/todos" replace /> : children;
 }
 
 export default function App() {
@@ -20,13 +20,14 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            path="/"
+            path="/todos"
             element={
               <Protected>
                 <Todos />
               </Protected>
             }
           />
+          <Route path="/" element={<Navigate to="/todos" replace />} />
           <Route
             path="/login"
             element={
@@ -43,10 +44,9 @@ export default function App() {
               </PublicOnly>
             }
           />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/todos" replace />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
   );
 }
-
