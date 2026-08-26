@@ -190,6 +190,12 @@ export default function Todos() {
                     )}
                   </>
                 )}
+                      <p style={{ fontSize: "0.75em", color: "#999", margin: "4px 0 0" }}>
+                      Created: {new Date(todo.createdAt).toLocaleString()}
+                      {todo.updatedAt !== todo.createdAt && (
+                        <span> · Updated: {new Date(todo.updatedAt).toLocaleString()}</span>
+                      )}
+                    </p>
               </div>
 
               <div className="row-actions">
