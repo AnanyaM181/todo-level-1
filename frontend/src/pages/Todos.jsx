@@ -6,8 +6,10 @@ export default function Todos() {
   const { user, logout } = useAuth();
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState("");
+  const [description, setDescription] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [editText, setEditText] = useState("");
+  const [editDescription, setEditDescription] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -34,16 +36,16 @@ export default function Todos() {
     if (!trimmed) return;
     setError("");
     try {
-      const todo = await api.addTodo(trimmed);
+      const todo = await api.addTodo(trimmed, description.trim());
       setTodos((prev) => [todo, ...prev]);
       setText("");
+      setDescription("");
     } catch (err) {
       setError(err.message);
     }
   };
 
   const toggleTodo = async (todo) => {
-    // optimistic update
     setTodos((prev) =>
       prev.map((t) => (t._id === todo._id ? { ...t, completed: !t.completed } : t))
     );
@@ -60,13 +62,17 @@ export default function Todos() {
   const startEdit = (todo) => {
     setEditingId(todo._id);
     setEditText(todo.text);
+    setEditDescription(todo.description || "");
   };
 
   const saveEdit = async (id) => {
     const trimmed = editText.trim();
     if (!trimmed) return setEditingId(null);
     try {
-      const updated = await api.updateTodo(id, { text: trimmed });
+      const updated = await api.updateTodo(id, { 
+        text: trimmed, 
+        description: editDescription.trim() 
+      });
       setTodos((prev) => prev.map((t) => (t._id === id ? updated : t)));
     } catch (err) {
       setError(err.message);
@@ -109,17 +115,25 @@ export default function Todos() {
       </header>
 
       <form className="add-row" onSubmit={addTodo}>
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Add a task…"
-          maxLength={300}
-          aria-label="New task"
-        />
-        <button type="submit" className="btn-primary">
-          Add
-        </button>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1, gap: "8px" }}>
+          <input
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Add a task…"
+            maxLength={300}
+            aria-label="New task"
+          />
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Add a description… (optional)"
+            maxLength={1000}
+            aria-label="Task description"
+          />
+        </div>
+        <button type="submit" className="btn-primary">Add</button>
       </form>
 
       {error && <p className="form-error" role="alert">{error}</p>}
@@ -139,35 +153,48 @@ export default function Todos() {
                 <span className="checkmark" aria-hidden="true" />
               </label>
 
-              {editingId === todo._id ? (
-                <input
-                  className="edit-input"
-                  value={editText}
-                  autoFocus
-                  onChange={(e) => setEditText(e.target.value)}
-                  onBlur={() => saveEdit(todo._id)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") saveEdit(todo._id);
-                    if (e.key === "Escape") setEditingId(null);
-                  }}
-                />
-              ) : (
-                <span className="todo-text" onDoubleClick={() => startEdit(todo)}>
-                  {todo.text}
-                </span>
-              )}
+              <div style={{ flex: 1 }}>
+                {editingId === todo._id ? (
+                  <>
+                    <input
+                      className="edit-input"
+                      value={editText}
+                      autoFocus
+                      onChange={(e) => setEditText(e.target.value)}
+                      onBlur={() => saveEdit(todo._id)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") saveEdit(todo._id);
+                        if (e.key === "Escape") setEditingId(null);
+                      }}
+                    />
+                    <input
+                      className="edit-input"
+                      value={editDescription}
+                      placeholder="Edit description…"
+                      onChange={(e) => setEditDescription(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") saveEdit(todo._id);
+                        if (e.key === "Escape") setEditingId(null);
+                      }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <span className="todo-text" onDoubleClick={() => startEdit(todo)}>
+                      {todo.text}
+                    </span>
+                    {todo.description && (
+                      <p style={{ fontSize: "0.85em", color: "#666", margin: "4px 0 0" }}>
+                        {todo.description}
+                      </p>
+                    )}
+                  </>
+                )}
+              </div>
 
               <div className="row-actions">
-                <button className="btn-icon" onClick={() => startEdit(todo)} aria-label="Edit task">
-                  ✎
-                </button>
-                <button
-                  className="btn-icon danger"
-                  onClick={() => removeTodo(todo._id)}
-                  aria-label="Delete task"
-                >
-                  ✕
-                </button>
+                <button className="btn-icon" onClick={() => startEdit(todo)} aria-label="Edit task">✎</button>
+                <button className="btn-icon danger" onClick={() => removeTodo(todo._id)} aria-label="Delete task">✕</button>
               </div>
             </li>
           ))}
