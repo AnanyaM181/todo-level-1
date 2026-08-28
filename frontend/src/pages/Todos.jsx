@@ -137,6 +137,15 @@ export default function Todos() {
             maxLength={1000}
             aria-label="Task description"
           />
+          <select
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
+            style={{ padding: "8px", borderRadius: "6px", border: "1px solid #ddd" }}
+          >
+            <option value="low">🟢 Low</option>
+            <option value="medium">🟡 Medium</option>
+            <option value="high">🔴 High</option>
+          </select>
         </div>
         <button type="submit" className="btn-primary">Add</button>
       </form>
