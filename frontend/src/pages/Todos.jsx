@@ -42,6 +42,7 @@ export default function Todos() {
       setTodos((prev) => [todo, ...prev]);
       setText("");
       setDescription("");
+      setPriority("medium");
     } catch (err) {
       setError(err.message);
     }
@@ -65,6 +66,7 @@ export default function Todos() {
     setEditingId(todo._id);
     setEditText(todo.text);
     setEditDescription(todo.description || "");
+    setEditPriority(todo.priority || "medium");
   };
 
   const saveEdit = async (id) => {
