@@ -191,10 +191,22 @@ export default function Todos() {
                         if (e.key === "Escape") setEditingId(null);
                       }}
                     />
+                    <select
+                      value={editPriority}
+                      onChange={(e) => setEditPriority(e.target.value)}
+                      style={{ padding: "8px", borderRadius: "6px", border: "1px solid #ddd", marginTop: "4px" }}
+                    >
+                      <option value="low">🟢 Low</option>
+                      <option value="medium">🟡 Medium</option>
+                      <option value="high">🔴 High</option>
+                    </select>
                   </>
                 ) : (
                   <>
                     <span className="todo-text" onDoubleClick={() => startEdit(todo)}>
+                      {todo.priority === "high" && "🔴 "}
+                      {todo.priority === "medium" && "🟡 "}
+                      {todo.priority === "low" && "🟢 "}
                       {todo.text}
                     </span>
                     {todo.description && (
