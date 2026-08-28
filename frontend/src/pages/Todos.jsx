@@ -38,7 +38,7 @@ export default function Todos() {
     if (!trimmed) return;
     setError("");
     try {
-      const todo = await api.addTodo(trimmed, description.trim());
+      const todo = await api.addTodo(trimmed, description.trim(), priority);
       setTodos((prev) => [todo, ...prev]);
       setText("");
       setDescription("");
@@ -71,9 +71,9 @@ export default function Todos() {
     const trimmed = editText.trim();
     if (!trimmed) return setEditingId(null);
     try {
-      const updated = await api.updateTodo(id, { 
-        text: trimmed, 
-        description: editDescription.trim() 
+      const updated = await api.updateTodo(id, {
+        text: trimmed,
+        description: editDescription.trim()
       });
       setTodos((prev) => prev.map((t) => (t._id === id ? updated : t)));
     } catch (err) {
@@ -102,13 +102,13 @@ export default function Todos() {
         <div>
           <span className="brand-mark">Daybook</span>
           <h1>{today}</h1>
-                    <p className="header-sub">
+          <p className="header-sub">
             Hey {user?.name?.split(" ")[0]}! —{" "}
             {todos.length === 0
               ? "your list is empty. Add your first task below."
               : remaining === 0
-              ? "everything's done. Nice."
-              : `${remaining} task${remaining === 1 ? "" : "s"} to go.`}
+                ? "everything's done. Nice."
+                : `${remaining} task${remaining === 1 ? "" : "s"} to go.`}
           </p>
         </div>
         <button className="btn-ghost" onClick={logout}>
@@ -192,12 +192,12 @@ export default function Todos() {
                     )}
                   </>
                 )}
-                      <p style={{ fontSize: "0.75em", color: "#999", margin: "4px 0 0" }}>
-                      Created: {new Date(todo.createdAt).toLocaleString()}
-                      {todo.updatedAt !== todo.createdAt && (
-                        <span> · Updated: {new Date(todo.updatedAt).toLocaleString()}</span>
-                      )}
-                    </p>
+                <p style={{ fontSize: "0.75em", color: "#999", margin: "4px 0 0" }}>
+                  Created: {new Date(todo.createdAt).toLocaleString()}
+                  {todo.updatedAt !== todo.createdAt && (
+                    <span> · Updated: {new Date(todo.updatedAt).toLocaleString()}</span>
+                  )}
+                </p>
               </div>
 
               <div className="row-actions">
