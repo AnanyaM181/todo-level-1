@@ -75,7 +75,8 @@ export default function Todos() {
     try {
       const updated = await api.updateTodo(id, {
         text: trimmed,
-        description: editDescription.trim()
+        description: editDescription.trim(),
+        priority: editPriority
       });
       setTodos((prev) => prev.map((t) => (t._id === id ? updated : t)));
     } catch (err) {
