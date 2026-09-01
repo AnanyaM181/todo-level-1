@@ -24,7 +24,7 @@ export const api = {
   signup: (body) => request("/auth/signup", { method: "POST", body: JSON.stringify(body) }),
   login: (body) => request("/auth/login", { method: "POST", body: JSON.stringify(body) }),
   getTodos: () => request("/todos"),
-  addTodo: (text, description = "") => request("/todos", { method: "POST", body: JSON.stringify({ text, description }) }),
+  addTodo: (text, description = "", priority = "medium") => request("/todos", { method: "POST", body: JSON.stringify({ text, description, priority }) }),
   updateTodo: (id, updates) =>
     request(`/todos/${id}`, { method: "PATCH", body: JSON.stringify(updates) }),
   deleteTodo: (id) => request(`/todos/${id}`, { method: "DELETE" }),
