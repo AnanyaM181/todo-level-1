@@ -14,6 +14,8 @@ export default function Todos() {
   const [editPriority, setEditPriority] = useState("medium");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [filter, setFilter] = useState("all");
+  const [priorityFilter, setPriorityFilter] = useState("all");
 
   const today = new Date().toLocaleDateString(undefined, {
     weekday: "long",
@@ -98,6 +100,16 @@ export default function Todos() {
   };
 
   const remaining = todos.filter((t) => !t.completed).length;
+  const filteredTodos = todos
+    .filter((t) => {
+      if (filter === "active") return !t.completed;
+      if (filter === "completed") return t.completed;
+      return true;
+    })
+    .filter((t) => {
+      if (priorityFilter === "all") return true;
+      return t.priority === priorityFilter;
+    });
 
   return (
     <div className="app-shell">
@@ -191,7 +203,7 @@ export default function Todos() {
                         if (e.key === "Escape") setEditingId(null);
                       }}
                     />
-                    
+
                     <select
                       value={editPriority}
                       onChange={(e) => setEditPriority(e.target.value)}
