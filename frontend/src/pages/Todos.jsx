@@ -163,6 +163,94 @@ export default function Todos() {
       </form>
 
       {error && <p className="form-error" role="alert">{error}</p>}
+            {/* Filter Bar */}
+      <div style={{ display: "flex", gap: "8px", margin: "16px 0", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: "4px" }}>
+          <button
+            onClick={() => setFilter("all")}
+            style={{
+              padding: "6px 14px",
+              borderRadius: "20px",
+              border: "none",
+              cursor: "pointer",
+              background: filter === "all" ? "#2d6a4f" : "#eee",
+              color: filter === "all" ? "white" : "#333",
+              fontWeight: filter === "all" ? "bold" : "normal"
+            }}
+          >All</button>
+          <button
+            onClick={() => setFilter("active")}
+            style={{
+              padding: "6px 14px",
+              borderRadius: "20px",
+              border: "none",
+              cursor: "pointer",
+              background: filter === "active" ? "#2d6a4f" : "#eee",
+              color: filter === "active" ? "white" : "#333",
+              fontWeight: filter === "active" ? "bold" : "normal"
+            }}
+          >Pending</button>
+          <button
+            onClick={() => setFilter("completed")}
+            style={{
+              padding: "6px 14px",
+              borderRadius: "20px",
+              border: "none",
+              cursor: "pointer",
+              background: filter === "completed" ? "#2d6a4f" : "#eee",
+              color: filter === "completed" ? "white" : "#333",
+              fontWeight: filter === "completed" ? "bold" : "normal"
+            }}
+          >Completed</button>
+        </div>
+
+        <div style={{ display: "flex", gap: "4px" }}>
+          <button
+            onClick={() => setPriorityFilter("all")}
+            style={{
+              padding: "6px 14px",
+              borderRadius: "20px",
+              border: "none",
+              cursor: "pointer",
+              background: priorityFilter === "all" ? "#555" : "#eee",
+              color: priorityFilter === "all" ? "white" : "#333",
+            }}
+          >All Priority</button>
+          <button
+            onClick={() => setPriorityFilter("high")}
+            style={{
+              padding: "6px 14px",
+              borderRadius: "20px",
+              border: "none",
+              cursor: "pointer",
+              background: priorityFilter === "high" ? "#e63946" : "#eee",
+              color: priorityFilter === "high" ? "white" : "#333",
+            }}
+          >🔴 High</button>
+          <button
+            onClick={() => setPriorityFilter("medium")}
+            style={{
+              padding: "6px 14px",
+              borderRadius: "20px",
+              border: "none",
+              cursor: "pointer",
+              background: priorityFilter === "medium" ? "#f4a261" : "#eee",
+              color: priorityFilter === "medium" ? "white" : "#333",
+            }}
+          >🟡 Medium</button>
+          <button
+            onClick={() => setPriorityFilter("low")}
+            style={{
+              padding: "6px 14px",
+              borderRadius: "20px",
+              border: "none",
+              cursor: "pointer",
+              background: priorityFilter === "low" ? "#2d6a4f" : "#eee",
+              color: priorityFilter === "low" ? "white" : "#333",
+            }}
+          >🟢 Low</button>
+        </div>
+      </div>
 
       {loading ? (
         <p className="muted">Loading your list…</p>
