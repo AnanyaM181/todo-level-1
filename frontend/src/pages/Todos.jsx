@@ -292,14 +292,13 @@ export default function Todos() {
                       }}
                     />
                   
-                  
 
                     <select
                       value={editPriority}
                       onChange={(e) => setEditPriority(e.target.value)}
                       style={{ padding: "8px", borderRadius: "6px", border: "1px solid #ddd", marginTop: "4px" }}
                     >
-                      <option value="low">🟢 Low</option>
+                      <option value="low"> Low</option>
                       <option value="medium">🟡 Medium</option>
                       <option value="high">🔴 High</option>
                     </select>
