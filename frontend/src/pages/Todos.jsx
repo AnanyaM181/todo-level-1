@@ -300,7 +300,7 @@ export default function Todos() {
                     >
                       <option value="low">🟢 Low</option>
                       <option value="medium">🟡 Medium</option>
-                      <option value="high"> High</option>
+                      <option value="high">🔴 High</option>
                     </select>
                   </>
                 ) : (
