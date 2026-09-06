@@ -326,7 +326,6 @@ export default function Todos() {
                 </p>
               </div>
 
-
               <div className="row-actions">
                 <button className="btn-icon" onClick={() => startEdit(todo)} aria-label="Edit task">✎</button>
                 <button className="btn-icon danger" onClick={() => removeTodo(todo._id)} aria-label="Delete task">✕</button>
