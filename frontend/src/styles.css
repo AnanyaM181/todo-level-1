@@ -11,6 +11,18 @@
   --radius: 14px;
 }
 
+/* ---------- Dark Mode ---------- */
+body.dark {
+  --paper: #1a1f1e;
+  --card: #242b29;
+  --ink: #e8edeb;
+  --ink-soft: #8a9e98;
+  --pine: #4a9e7f;
+  --pine-dark: #3d8a6e;
+  --line: #2e3836;
+  --danger: #e05c4a;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -21,6 +33,7 @@ body {
   color: var(--ink);
   font-family: "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 h1 {
@@ -81,7 +94,7 @@ form input {
   border: 1px solid var(--line);
   border-radius: 10px;
   font: inherit;
-  background: #fbfcfb;
+  background: var(--card);
   color: var(--ink);
 }
 
@@ -182,6 +195,26 @@ form input:focus,
   color: var(--ink);
 }
 
+/* ---------- Dark mode toggle ---------- */
+.dark-toggle {
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.5rem 0.9rem;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.dark-toggle:hover {
+  border-color: var(--ink-soft);
+  color: var(--ink);
+}
+
 .add-row {
   display: flex;
   gap: 0.6rem;
@@ -195,6 +228,13 @@ form input:focus,
   border-radius: 10px;
   font: inherit;
   background: var(--card);
+  color: var(--ink);
+}
+
+.add-row select {
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line);
 }
 
 .add-row .btn-primary {
@@ -276,7 +316,6 @@ form input:focus,
   word-break: break-word;
 }
 
-/* animated strike-through */
 .todo-text::after {
   content: "";
   position: absolute;
@@ -310,6 +349,8 @@ li.done .todo-text::after {
   padding: 0.35rem 0.5rem;
   border: 1px solid var(--line);
   border-radius: 8px;
+  background: var(--card);
+  color: var(--ink);
 }
 
 .row-actions {
