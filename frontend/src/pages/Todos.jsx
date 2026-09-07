@@ -122,8 +122,8 @@ export default function Todos() {
             {todos.length === 0
               ? "your list is empty. Add your first task below."
               : remaining === 0
-                ? "everything's done. Nice."
-                : `${remaining} task${remaining === 1 ? "" : "s"} to go.`}
+              ? "everything's done. Nice."
+              : `${remaining} task${remaining === 1 ? "" : "s"} to go.`}
           </p>
         </div>
         <button className="btn-ghost" onClick={logout}>
@@ -163,6 +163,7 @@ export default function Todos() {
       </form>
 
       {error && <p className="form-error" role="alert">{error}</p>}
+
       {/* Filter Bar */}
       <div style={{ display: "flex", gap: "8px", margin: "16px 0", flexWrap: "wrap" }}>
         <div style={{ display: "flex", gap: "4px" }}>
@@ -257,7 +258,7 @@ export default function Todos() {
       ) : (
         <ul className="todo-list">
           {filteredTodos.length === 0 ? (
-            <p className="muted">No tasks found!</p>
+            <li style={{ listStyle: "none" }} className="muted">No tasks found!</li>
           ) : filteredTodos.map((todo) => (
             <li key={todo._id} className={todo.completed ? "done" : ""}>
               <label className="check-wrap">
@@ -293,8 +294,6 @@ export default function Todos() {
                         if (e.key === "Escape") setEditingId(null);
                       }}
                     />
-
-
                     <select
                       value={editPriority}
                       onChange={(e) => setEditPriority(e.target.value)}
