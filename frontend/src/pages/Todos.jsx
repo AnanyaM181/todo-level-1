@@ -163,7 +163,7 @@ export default function Todos() {
       </form>
 
       {error && <p className="form-error" role="alert">{error}</p>}
-            {/* Filter Bar */}
+      {/* Filter Bar */}
       <div style={{ display: "flex", gap: "8px", margin: "16px 0", flexWrap: "wrap" }}>
         <div style={{ display: "flex", gap: "4px" }}>
           <button
@@ -256,7 +256,9 @@ export default function Todos() {
         <p className="muted">Loading your list…</p>
       ) : (
         <ul className="todo-list">
-          {todos.map((todo) => (
+          {filteredTodos.length === 0 ? (
+            <p className="muted">No tasks found!</p>
+          ) : filteredTodos.map((todo) => (
             <li key={todo._id} className={todo.completed ? "done" : ""}>
               <label className="check-wrap">
                 <input
@@ -291,7 +293,7 @@ export default function Todos() {
                         if (e.key === "Escape") setEditingId(null);
                       }}
                     />
-                  
+
 
                     <select
                       value={editPriority}
