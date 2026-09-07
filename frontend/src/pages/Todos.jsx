@@ -16,6 +16,18 @@ export default function Todos() {
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("darkMode") === "true";
+  });
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
 
   const today = new Date().toLocaleDateString(undefined, {
     weekday: "long",
@@ -122,8 +134,8 @@ export default function Todos() {
             {todos.length === 0
               ? "your list is empty. Add your first task below."
               : remaining === 0
-              ? "everything's done. Nice."
-              : `${remaining} task${remaining === 1 ? "" : "s"} to go.`}
+                ? "everything's done. Nice."
+                : `${remaining} task${remaining === 1 ? "" : "s"} to go.`}
           </p>
         </div>
         <button className="btn-ghost" onClick={logout}>
