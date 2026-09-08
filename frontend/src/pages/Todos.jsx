@@ -17,6 +17,7 @@ export default function Todos() {
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
+  const [search, setSearch] = useState("");
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("darkMode") === "true";
   });
