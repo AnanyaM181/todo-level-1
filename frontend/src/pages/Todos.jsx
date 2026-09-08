@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api.js";
 import { useAuth } from "../AuthContext.jsx";
+import confetti from "canvas-confetti";
 
 export default function Todos() {
   const { user, logout } = useAuth();
