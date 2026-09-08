@@ -113,6 +113,16 @@ export default function Todos() {
   };
 
   const remaining = todos.filter((t) => !t.completed).length;
+  useEffect(() => {
+    if (todos.length > 0 && remaining === 0) {
+      confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ["#2f6d5a", "#d9a441", "#4a9e7f", "#e63946"],
+      });
+    }
+  }, [remaining, todos.length]);
   const filteredTodos = todos
     .filter((t) => {
       if (filter === "active") return !t.completed;
@@ -139,7 +149,7 @@ export default function Todos() {
                 : `${remaining} task${remaining === 1 ? "" : "s"} to go.`}
           </p>
         </div>
-                <div style={{ display: "flex", gap: "8px" }}>
+        <div style={{ display: "flex", gap: "8px" }}>
           <button
             className="dark-toggle"
             onClick={() => setDarkMode((prev) => !prev)}
