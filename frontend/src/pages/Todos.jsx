@@ -138,9 +138,17 @@ export default function Todos() {
                 : `${remaining} task${remaining === 1 ? "" : "s"} to go.`}
           </p>
         </div>
-        <button className="btn-ghost" onClick={logout}>
-          Log out
-        </button>
+                <div style={{ display: "flex", gap: "8px" }}>
+          <button
+            className="dark-toggle"
+            onClick={() => setDarkMode((prev) => !prev)}
+          >
+            {darkMode ? "☀️ Light" : "🌙 Dark"}
+          </button>
+          <button className="btn-ghost" onClick={logout}>
+            Log out
+          </button>
+        </div>
       </header>
 
       <form className="add-row" onSubmit={addTodo}>
