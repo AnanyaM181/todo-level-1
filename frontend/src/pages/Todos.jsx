@@ -124,7 +124,7 @@ export default function Todos() {
       });
     }
   }, [remaining, todos.length]);
-  const filteredTodos = todos
+    const filteredTodos = todos
     .filter((t) => {
       if (filter === "active") return !t.completed;
       if (filter === "completed") return t.completed;
@@ -133,6 +133,13 @@ export default function Todos() {
     .filter((t) => {
       if (priorityFilter === "all") return true;
       return t.priority === priorityFilter;
+    })
+    .filter((t) => {
+      if (!search.trim()) return true;
+      return (
+        t.text.toLowerCase().includes(search.toLowerCase()) ||
+        t.description?.toLowerCase().includes(search.toLowerCase())
+      );
     });
 
   return (
