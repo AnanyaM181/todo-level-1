@@ -203,8 +203,7 @@ export default function Todos() {
 
       {error && <p className="form-error" role="alert">{error}</p>}
 
-      {/* Filter Bar */}
-            {/* Search Bar */}
+      {/* Search Bar */}
       <div style={{ margin: "0 0 12px 0", position: "relative" }}>
         <span style={{
           position: "absolute",
@@ -247,6 +246,8 @@ export default function Todos() {
           >✕</button>
         )}
       </div>
+      
+      {/* Filter Bar */}
       <div style={{ display: "flex", gap: "8px", margin: "16px 0", flexWrap: "wrap" }}>
         <div style={{ display: "flex", gap: "4px" }}>
           <button
