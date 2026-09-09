@@ -204,6 +204,49 @@ export default function Todos() {
       {error && <p className="form-error" role="alert">{error}</p>}
 
       {/* Filter Bar */}
+            {/* Search Bar */}
+      <div style={{ margin: "0 0 12px 0", position: "relative" }}>
+        <span style={{
+          position: "absolute",
+          left: "12px",
+          top: "50%",
+          transform: "translateY(-50%)",
+          color: "var(--ink-soft)",
+          fontSize: "1rem"
+        }}>🔍</span>
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search tasks..."
+          style={{
+            width: "100%",
+            padding: "10px 12px 10px 36px",
+            borderRadius: "10px",
+            border: "1px solid var(--line)",
+            font: "inherit",
+            background: "var(--card)",
+            color: "var(--ink)",
+            fontSize: "0.95rem"
+          }}
+        />
+        {search && (
+          <button
+            onClick={() => setSearch("")}
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: "var(--ink-soft)",
+              fontSize: "1rem"
+            }}
+          >✕</button>
+        )}
+      </div>
       <div style={{ display: "flex", gap: "8px", margin: "16px 0", flexWrap: "wrap" }}>
         <div style={{ display: "flex", gap: "4px" }}>
           <button
