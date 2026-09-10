@@ -5,6 +5,7 @@ const todoSchema = new mongoose.Schema({
   text:        { type: String, required: true, trim: true, maxlength: 300 },
   description: { type: String, trim: true, maxlength: 1000, default: "" },
   priority:    { type: String, enum: ["low", "medium", "high"], default: "medium" },
+  dueDate:     { type: Date, default: null },
   completed:   { type: Boolean, default: false },
 }, { timestamps: true });
 
