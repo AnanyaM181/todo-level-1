@@ -9,10 +9,12 @@ export default function Todos() {
   const [text, setText] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("medium");
+  const [dueDate, setDueDate] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [editText, setEditText] = useState("");
   const [editDescription, setEditDescription] = useState("");
   const [editPriority, setEditPriority] = useState("medium");
+  const [editDueDate, setEditDueDate] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("all");
@@ -83,6 +85,7 @@ export default function Todos() {
     setEditText(todo.text);
     setEditDescription(todo.description || "");
     setEditPriority(todo.priority || "medium");
+    setEditDueDate(todo.dueDate ? new Date(todo.dueDate).toISOString().split("T")[0] : "");
   };
 
   const saveEdit = async (id) => {
@@ -124,7 +127,7 @@ export default function Todos() {
       });
     }
   }, [remaining, todos.length]);
-    const filteredTodos = todos
+  const filteredTodos = todos
     .filter((t) => {
       if (filter === "active") return !t.completed;
       if (filter === "completed") return t.completed;
@@ -246,7 +249,7 @@ export default function Todos() {
           >✕</button>
         )}
       </div>
-      
+
       {/* Filter Bar */}
       <div style={{ display: "flex", gap: "8px", margin: "16px 0", flexWrap: "wrap" }}>
         <div style={{ display: "flex", gap: "4px" }}>
