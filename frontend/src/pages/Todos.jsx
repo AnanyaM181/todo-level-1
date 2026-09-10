@@ -56,11 +56,12 @@ export default function Todos() {
     if (!trimmed) return;
     setError("");
     try {
-      const todo = await api.addTodo(trimmed, description.trim(), priority);
+      const todo = await api.addTodo(trimmed, description.trim(), priority, dueDate);
       setTodos((prev) => [todo, ...prev]);
       setText("");
       setDescription("");
       setPriority("medium");
+      setDueDate("");
     } catch (err) {
       setError(err.message);
     }
@@ -95,7 +96,8 @@ export default function Todos() {
       const updated = await api.updateTodo(id, {
         text: trimmed,
         description: editDescription.trim(),
-        priority: editPriority
+        priority: editPriority,
+        dueDate: editDueDate || null
       });
       setTodos((prev) => prev.map((t) => (t._id === id ? updated : t)));
     } catch (err) {
@@ -424,3 +426,5 @@ export default function Todos() {
     </div>
   );
 }
+
+// done untill const updated
