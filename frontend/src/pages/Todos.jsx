@@ -439,5 +439,3 @@ export default function Todos() {
     </div>
   );
 }
-
-// done untill const updated
