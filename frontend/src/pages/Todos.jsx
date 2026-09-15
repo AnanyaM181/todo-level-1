@@ -202,7 +202,7 @@ export default function Todos() {
             <option value="medium">🟡 Medium</option>
             <option value="high">🔴 High</option>
           </select>
-                    <input
+          <input
             type="date"
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
@@ -404,6 +404,20 @@ export default function Todos() {
                       <option value="medium">🟡 Medium</option>
                       <option value="high">🔴 High</option>
                     </select>
+                    <input
+                      type="date"
+                      value={editDueDate}
+                      onChange={(e) => setEditDueDate(e.target.value)}
+                      style={{
+                        padding: "8px",
+                        borderRadius: "6px",
+                        border: "1px solid var(--line)",
+                        background: "var(--card)",
+                        color: "var(--ink)",
+                        font: "inherit",
+                        marginTop: "4px"
+                      }}
+                    />
                   </>
                 ) : (
                   <>
