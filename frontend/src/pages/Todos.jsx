@@ -433,20 +433,7 @@ export default function Todos() {
                       </p>
                     )}
                                         {todo.dueDate && (
-                      <p style={{
-                        fontSize: "0.8em",
-                        margin: "4px 0 0",
-                        color: new Date(todo.dueDate) < new Date() && !todo.completed
-                          ? "#e63946"
-                          : "var(--ink-soft)"
-                      }}>
-                        📅 Due: {new Date(todo.dueDate).toLocaleDateString(undefined, {
-                          weekday: "short",
-                          month: "short",
-                          day: "numeric"
-                        })}
-                        {new Date(todo.dueDate) < new Date() && !todo.completed && " ⚠️ Overdue!"}
-                      </p>
+                      
                     )}
                   </>
                 )}
