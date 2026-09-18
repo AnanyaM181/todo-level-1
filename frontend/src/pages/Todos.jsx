@@ -432,7 +432,7 @@ export default function Todos() {
                         {todo.description}
                       </p>
                     )}
-                                        {todo.dueDate && (
+                    {todo.dueDate && (
                       <p style={{
                         fontSize: "0.8em",
                         margin: "4px 0 0",
@@ -447,8 +447,6 @@ export default function Todos() {
                         })}
                         {new Date(todo.dueDate) < new Date() && !todo.completed && " ⚠️ Overdue!"}
                       </p>
-
-                      
                     )}
                   </>
                 )}
